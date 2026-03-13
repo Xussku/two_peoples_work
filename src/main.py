@@ -1,7 +1,11 @@
-# src/main.py
+from defs import NoteStorage
+
 def main():
+    storage = NoteStorage()
+
     while True:
-        print("\n--- Менеджер заметок ---")
+        print()
+        print("--- Менеджер заметок ---")
         print("1. Добавить заметку")
         print("2. Показать все заметки")
         print("3. Удалить заметку по ID")
@@ -10,22 +14,30 @@ def main():
         choice = input("Выберите действие: ")
 
         if choice == '1':
-            print("Заглушка: Здесь будет добавление заметки.")
+            title = input("Введите заголовок: ")
+            body = input("Введите текст заметки: ")
+            storage.add_note(title, body)
+
         elif choice == '2':
-            print("Заглушка: Здесь будет показ всех заметок.")
+            notes = storage.get_all_notes()
+            if not notes:
+                print("Заметок нет")
+            else:
+                for note in notes:
+                    print(f"[ID: {note['id']}] {note['title']} - {note['body']}")
 
         elif choice == '3':
             try:
                 note_id = int(input("Введите ID заметки для удаления: "))
-                print(f"Заглушка: Здесь будет удаление заметки с ID {note_id}.")
+                storage.remove_note(note_id)
             except ValueError:
-                print("Ошибка: Введите число.")
+                print("Ошибка")
 
         elif choice == '4':
-            print("До свидания!")
+            print("выход")
             break
         else:
-            print("Неверный ввод. Попробуйте снова.")
+            print("Неверный ввод")
 
 if __name__ == "__main__":
     main()
